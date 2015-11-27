@@ -1,18 +1,15 @@
 package localidade;
 
-import org.omg.CORBA.SystemException;
-
 /**
  * Como as informações estão sendo retiradas de um arquivo externo, não podem
  * ser confiadas pelo programa, pois um único dado errado pode comprometer todo
  * o funcionamento do sistema.
- * @author 	Cristiano
  * @since 	2015-10-29
  */
 public class TratamentoDados {
 	
 	public static String ajustaEndereço (String linha){
-		linha = linha.replace("Endereço: ", "").replace(".", "");
+		linha = linha.replace("Endereco: ", "").replace(".", "");
 		
 		return linha;
 	}

@@ -66,7 +66,7 @@ public class Disponibilidade {
 			
 			tmp = LocalDate.of(this.ano, this.mes, this.dia);
 			
-			dia = controleData.getDayFromInt(tmp.getDayOfWeek().getValue());
+			dia = ControleData.getDayFromInt(tmp.getDayOfWeek().getValue());
 		}
 		else
 			dia = "(todo mes)";

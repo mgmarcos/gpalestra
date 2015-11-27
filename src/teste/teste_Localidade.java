@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 import localidade.Localidade;
 import localidade.Responsavel;
-import calendario.controleData;
+import calendario.ControleData;
 import calendario.Disponibilidade;
 import localidade.TratamentoDados;
 
@@ -48,7 +48,7 @@ public class teste_Localidade {
 		assertNull (TratamentoDados.ajustaResponsável(resp_errado1));
 		assertNull (TratamentoDados.ajustaResponsável(resp_errado2));
 		
-		controleData.ajustaDisponibilidade(disp_errado1);
+		ControleData.ajustaDisponibilidade(disp_errado1);
 		
 		assertEquals ( 1, dias.size() );
 	}
@@ -82,7 +82,6 @@ public class teste_Localidade {
 		
 		for(Localidade loc : lista){
 			
-			// falta hora e responsável
 			System.out.print("Localidade " + i + ": " + loc.getNome() + "\nEndereço: " + loc.getEndereço() + "\nDisponibilidade: ");
 			
 			Iterator<Disponibilidade> itDisp = loc.getDisponibilidade().iterator();
@@ -98,5 +97,5 @@ public class teste_Localidade {
 		}
 		System.out.println("");
 		
-	}	
+	}
 }

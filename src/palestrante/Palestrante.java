@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import palestrante.TratamentoDados;
-import calendario.controleData;
+import calendario.ControleData;
 import calendario.Disponibilidade;
 
 public class Palestrante {
@@ -40,6 +40,7 @@ public class Palestrante {
 		try {
 	    	scan = new Scanner(new File(arq));
 	    	int numeroLinha = 0;
+	    	int numeroPalestrantes = 0;
 	    	
 	        while(scan.hasNextLine()) {
 	        	String linha = scan.nextLine();
@@ -52,8 +53,9 @@ public class Palestrante {
 		            	linha = scan.nextLine();
 		            	numeroLinha ++;
 			            if(linha.startsWith("Disponibilidade: ")) {
-			            	novoPalestrante.setDisponibilidade(controleData.ajustaDisponibilidade(linha));
+			            	novoPalestrante.setDisponibilidade(ControleData.ajustaDisponibilidade(linha));
 			            	palestrantes.put(novoPalestrante.getNome(), novoPalestrante);
+			            	numeroPalestrantes++;
 			            } else {
 			            	throw new IllegalArgumentException("Esperado \"Disponibilidade: \" na linha " + numeroLinha + " do arquivo " + arq);
 			            }
@@ -65,6 +67,8 @@ public class Palestrante {
 	            }
 	        }
 	        scan.close();
+	        
+	        System.out.println(numeroPalestrantes + " palestrantes lidos com sucesso.");
 	    } 
 	    catch (FileNotFoundException e) {
 	        e.printStackTrace();

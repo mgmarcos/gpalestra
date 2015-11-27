@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import calendario.controleData;
+import calendario.ControleData;
 import calendario.Disponibilidade;
 
 import java.time.LocalTime;
@@ -141,7 +141,7 @@ public class Localidade {
 	        	}
 	    		
 	    		else if ( linha.startsWith("Disponibilidade: ") ){
-	        		LinkedList<Disponibilidade> disp = controleData.ajustaDisponibilidade(linha);
+	        		LinkedList<Disponibilidade> disp = ControleData.ajustaDisponibilidade(linha);
 	        		if (disp == null){
 	        			throw new IllegalArgumentException("Formato inválido para Hora. Linha: " + numeroLinha + ". Arquivo: " + arq);
 	        		}
@@ -159,18 +159,6 @@ public class Localidade {
 	    			
 	    			novaLocalidade.setEndereço(linha);
 	    		}
-	    		
-	        	/*
-	    		else if ( linha.startsWith("Responsável: ") ){
-	        		Responsavel res = TratamentoDados.ajustaResponsável(linha);
-	        		
-	        		if (res == null){
-	        			throw new IllegalArgumentException("Formato inválido para Responsável. Linha: " + numeroLinha + ". Arquivo: " + arq);
-	        		}
-	        		
-	        		novaLocalidade.responsável = res;
-	        	}
-	        	*/
 	    		
 	    		else {
 	        		throw new IllegalArgumentException("Informação inválida para Localidade. Linha: " + numeroLinha + ". Arquivo: " + arq);

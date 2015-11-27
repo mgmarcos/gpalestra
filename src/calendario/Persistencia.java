@@ -45,7 +45,11 @@ public class Persistencia {
 						Iterator<LocalTime> itHoras = diaCal.getHoras().keySet().iterator();
 						while(itHoras.hasNext()) {
 							HoraCalendario horaCal = diaCal.getHoras().get(itHoras.next());
-							writer.println(horaCal.getPalestra().getNome() + " (" + horaCal.getPalestrante().getNome() + ") (" + horaCal.getPalestra().getLocal().getEndereço() + "): " + 
+							writer.println(
+									horaCal.getPalestra().getNome() + 
+									" (" + horaCal.getPalestrante().getNome() + 
+									") (" + horaCal.getPalestra().getLocal().getNome() + " ~ " + horaCal.getPalestra().getLocal().getEndereço() + "): " + 
+									
 									String.format("%02d",horaCal.getDataHoraInicio().getHour()) + ":" +
 									String.format("%02d",horaCal.getDataHoraInicio().getMinute()) + "-" +
 									String.format("%02d",horaCal.getDataHoraFim().getHour()) + ":" +

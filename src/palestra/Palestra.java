@@ -15,7 +15,7 @@ public class Palestra {
 	private Palestrante palestrante;
 	private String tema;
 	private Localidade local;
-	private long duracaoMinutos;
+	private int duracaoMinutos;
 	
 	public String getNome() {
 		return nome;
@@ -41,10 +41,10 @@ public class Palestra {
 	public void setLocal(Localidade local) {
 		this.local = local;
 	}
-	public long getDuracaoMinutos() {
+	public int getDuracaoMinutos() {
 		return duracaoMinutos;
 	}
-	public void setDuracaoMinutos(long duracaoMinutos) {
+	public void setDuracaoMinutos(int duracaoMinutos) {
 		this.duracaoMinutos = duracaoMinutos;
 	}
 	
@@ -61,6 +61,7 @@ public class Palestra {
 		try {
 	    	scan = new Scanner(new File(arq));
 	    	int numeroLinha = 0;
+	    	int numeroPalestras = 0;
 	    	
 	        while(scan.hasNextLine()) {
 	        	String linha = scan.nextLine();
@@ -99,6 +100,7 @@ public class Palestra {
 								            	if(linha.startsWith("Duracao: ")) {
 								            		novaPalestra.setDuracaoMinutos(TratamentoDados.duracaoMinutosPalestra(linha));
 								            		palestras.add(novaPalestra);
+								            		numeroPalestras++;
 								            	} else {
 									            	throw new IllegalArgumentException("Esperado \"Duracao: \" na linha " + numeroLinha + " do arquivo " + arq);
 									            }
@@ -128,12 +130,15 @@ public class Palestra {
 	            }
 	        }
 	        scan.close();
+	        
+	        System.out.println(numeroPalestras + " palestras lidas com sucesso.");
 	    } 
 	    catch (FileNotFoundException e) {
 	        e.printStackTrace();
 	    }catch (IllegalArgumentException e) {
 	        e.printStackTrace();
-	    }
+	    }	
+		
 		return palestras;
 	}
 }

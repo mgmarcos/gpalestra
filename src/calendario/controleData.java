@@ -16,7 +16,7 @@ import java.util.Map.Entry;
  * @since 	0.2
  *
  */
-public class controleData {
+public class ControleData {
 	
 	private static HashMap<String, Integer> diasSemana;
 	static {
@@ -51,19 +51,19 @@ public class controleData {
         	int mes = Integer.valueOf(data[1].trim());
         	int ano = Integer.valueOf(data[2].trim());
         	
-        	if ( controleData.isValidDay(dia) && controleData.isValidMonth(mes) && controleData.isValidYear(ano) ){
+        	if ( ControleData.isValidDay(dia) && ControleData.isValidMonth(mes) && ControleData.isValidYear(ano) ){
         		
         		String[] duração = camposDisp[2].split("-");
         		
         		if ( duração.length == 2 ){
         			LocalTime[] instante = new LocalTime[2];
         			
-        			instante[0] = controleData.string_to_localTime(duração[0]);
-        			instante[1] = controleData.string_to_localTime(duração[1]);
+        			instante[0] = ControleData.string_to_localTime(duração[0]);
+        			instante[1] = ControleData.string_to_localTime(duração[1]);
         			
         			if ( instante[0] != null && instante[1] != null ){
         				
-        				if ( controleData.getDurationBetween(instante[1], instante[0]) > 0 ){
+        				if ( ControleData.getDurationBetween(instante[1], instante[0]) > 0 ){
         					
         					Disponibilidade disp = Disponibilidade.of(ano, mes, dia);
         					
@@ -167,4 +167,15 @@ public class controleData {
 		
 		return minute_a - minute_b;
 	}
+	
+	public static LocalTime maxof_localTime(LocalTime a, LocalTime b){
+		
+		return ( getDurationBetween(a, b) > 0 ) ? a : b;
+	}
+	
+	public static LocalTime minof_localTime(LocalTime a, LocalTime b){
+		
+		return ( getDurationBetween(a, b) < 0 ) ? a : b;
+	}
+
 }
