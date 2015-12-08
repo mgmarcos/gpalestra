@@ -2,8 +2,10 @@ package palestra;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import palestra.TratamentoDados;
@@ -56,88 +58,91 @@ public class Palestra {
 		Dom, Seg, Ter, Qua, Qui, Sex, Sab
 	}
 	
-	public static LinkedList<Palestra> lePalestras (String arq, LinkedHashMap<String,Palestrante> palestrantes, LinkedList<Localidade>localidades) {
+	/**
+	 * <h2> lePalestras <h2>
+	 * * Lê informações de palestra
+	 * * Confere se cada palestra possui todas as informações obrigatórias
+	 * * Confere se essas informações não possui incosistências
+	 * @param String arq : localização do arquivo
+	 * @return LinkedList<Palestra> : lista contendo palestras lidas com sucesso
+	 * @throws FileNotFoundException
+	 */
+	public static LinkedList<Palestra> lePalestras (String arq, LinkedHashMap<String,Palestrante> palestrantes, LinkedList<Localidade>localidades) throws FileNotFoundException {
 		LinkedList<Palestra> palestras = new LinkedList<Palestra>();
-		try {
-	    	scan = new Scanner(new File(arq));
-	    	int numeroLinha = 0;
-	    	int numeroPalestras = 0;
-	    	
-	        while(scan.hasNextLine()) {
-	        	String linha = scan.nextLine();
-	        	numeroLinha ++;
-	        	if(linha.startsWith("Nome: ")) {
-	        		Palestra novaPalestra = new Palestra();
-	        		novaPalestra.setNome(TratamentoDados.nomePalestra(linha));
-	        		
-		            if(scan.hasNextLine()) {
-		            	linha = scan.nextLine();
-		            	numeroLinha ++;
-			            if(linha.startsWith("Palestrante: ")) {
-			            	novaPalestra.setPalestrante(TratamentoDados.palestrantePalestra(linha, palestrantes));
-			            	if(novaPalestra.getPalestrante() == null) {
-			            		throw new IllegalArgumentException("Palestrante não identificado na linha " + numeroLinha + " do arquivo " + arq);
-			            	}
-			            	
-			            	if(scan.hasNextLine()) {
-			            		linha = scan.nextLine();
-				            	numeroLinha ++;
-				            	if(linha.startsWith("Tema: ")) {
-				            		novaPalestra.setTema(TratamentoDados.temaPalestra(linha));
-				            		
-				            		if(scan.hasNextLine()) {
-				            			linha = scan.nextLine();
-						            	numeroLinha ++;
-						            	if(linha.startsWith("Local: ")) {
-						            		novaPalestra.setLocal(TratamentoDados.localPalestra(linha, localidades));
-						            		if (novaPalestra.getLocal() == null){
-						            			throw new IllegalArgumentException("Localidade não identificada na linha " + numeroLinha + " do arquivo " + arq);
-						            		}
-						            		
-						            		if(scan.hasNextLine()) {
-						            			linha = scan.nextLine();
-								            	numeroLinha ++;
-								            	if(linha.startsWith("Duracao: ")) {
-								            		novaPalestra.setDuracaoMinutos(TratamentoDados.duracaoMinutosPalestra(linha));
-								            		palestras.add(novaPalestra);
-								            		numeroPalestras++;
-								            	} else {
-									            	throw new IllegalArgumentException("Esperado \"Duracao: \" na linha " + numeroLinha + " do arquivo " + arq);
-									            }
-						            		} else {
-								            	throw new IllegalArgumentException("Última Palestra não possui Duracao");
-								            }
-						            	} else {
-							            	throw new IllegalArgumentException("Esperado \"Local: \" na linha " + numeroLinha + " do arquivo " + arq);
-							            }
-				            		} else {
-						            	throw new IllegalArgumentException("Última Palestra não possui Local e Duracao");
-						            }
-				            	} else {
-					            	throw new IllegalArgumentException("Esperado \"Tema: \" na linha " + numeroLinha + " do arquivo " + arq);
-					            }
-			            	} else {
-				            	throw new IllegalArgumentException("Última Palestra não possui Tema, Local e Duracao");
-				            }
-			            } else {
-			            	throw new IllegalArgumentException("Esperado \"Palestrante: \" na linha " + numeroLinha + " do arquivo " + arq);
-			            }
-		            } else {
-		            	throw new IllegalArgumentException("Última Palestra não possui Palestrante, Tema, Local e Duracao");
-		            }
-	        	} else {
-	            	throw new IllegalArgumentException("Esperado \"Nome: \" na linha " + numeroLinha + " do arquivo " + arq);
-	            }
-	        }
-	        scan.close();
-	        
-	        System.out.println(numeroPalestras + " palestras lidas com sucesso.");
-	    } 
-	    catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    }catch (IllegalArgumentException e) {
-	        e.printStackTrace();
-	    }	
+		
+    	scan = new Scanner(new File(arq));
+    	PrintWriter log = new PrintWriter("[Log]"+arq);
+    	
+    	int numeroLinha = 0;
+    	int numeroPalestras = 0;
+    	
+    	Palestra novaPalestra = null;
+    	
+        while(scan.hasNextLine()) {
+        	
+        	String linha = scan.nextLine();
+        	numeroLinha++;
+        	
+        	try{
+        		if(linha.startsWith("Nome: ")) {
+        			linha = TratamentoDados.nomePalestra(linha);
+        			
+        			novaPalestra = new Palestra();
+        			novaPalestra.setNome(linha);
+        			
+        			
+        			linha = scan.nextLine(); numeroLinha++;
+        			if ( linha.startsWith("Palestrante: ") ){
+        				novaPalestra.setPalestrante(TratamentoDados.palestrantePalestra(linha, palestrantes));
+		            
+        				if( novaPalestra.getPalestrante() == null )
+        					throw new IllegalArgumentException("Palestrante não identificado");
+        				
+        				
+        				linha = scan.nextLine(); numeroLinha++;
+        				if ( linha.startsWith("Tema: ") ){
+        					novaPalestra.setTema(TratamentoDados.temaPalestra(linha));
+        					
+        					
+        					linha = scan.nextLine(); numeroLinha++;
+        					if ( linha.startsWith("Local: ") ){
+        						novaPalestra.setLocal(TratamentoDados.localPalestra(linha, localidades));
+        	            		
+        						if (novaPalestra.getLocal() == null)
+        	            			throw new IllegalArgumentException("Localidade não identificada");
+        						
+        						
+        						linha = scan.nextLine(); numeroLinha++;
+        						if ( linha.startsWith("Duracao: ") ){
+        							int dur = TratamentoDados.duracaoMinutosPalestra(linha);
+        							
+        							if ( dur == -1 )
+        								throw new IllegalArgumentException("Duração inválida");
+        							
+        							novaPalestra.setDuracaoMinutos(dur);
+        							
+				            		palestras.add(novaPalestra);
+				            		numeroPalestras++;
+        						}	
+        					}
+        				}
+        			}
+        		}
+        		
+        	}
+        	catch ( IllegalArgumentException e ){
+        		log.println(numeroLinha + "> " + e.getMessage());
+        	}
+        	
+        	catch ( NoSuchElementException e ){
+        		log.println("Dados do arquivo estão incompletos para palestra: " + novaPalestra.getNome());
+        	}
+        }
+
+        scan.close();
+        log.close();
+        
+        System.out.println(numeroPalestras + " palestras lidas com sucesso.");
 		
 		return palestras;
 	}

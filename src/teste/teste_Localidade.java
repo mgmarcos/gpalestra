@@ -2,6 +2,7 @@ package teste;
 
 import java.util.LinkedList;
 import java.util.Iterator;
+import java.io.FileNotFoundException;
 import java.time.LocalTime;
 
 import org.junit.Test;
@@ -17,7 +18,7 @@ import localidade.TratamentoDados;
 
 public class teste_Localidade {
 	@Test
-	public void carregaLocalidade(){
+	public void carregaLocalidade() throws FileNotFoundException{
 		String arq;
 		LinkedList<Localidade> localidades;
 		

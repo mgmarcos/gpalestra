@@ -11,11 +11,17 @@ public class TratamentoDados {
 	public static String ajustaEndereço (String linha){
 		linha = linha.replace("Endereco: ", "").replace(".", "");
 		
+		if ( linha == null )
+			throw new IllegalArgumentException();
+		
 		return linha;
 	}
 	
 	public static String ajustaNome (String linha){
 		linha = linha.replace("Nome: ", "");
+		
+		if ( linha == null )
+			throw new IllegalArgumentException();
 		
 		return linha;
 	}

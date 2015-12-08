@@ -1,5 +1,6 @@
 package principal;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -12,16 +13,29 @@ import localidade.Localidade;
 
 public class Principal {
 	
+	static boolean logAtivado = false;
+	
 	public static void main(String[] args) {
+		
+		for(String a:args){
+			if ( a.compareTo("-l") == 0 ){
+				logAtivado = true;
+			}
+		}
 
-		LinkedHashMap<String,Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
+		try{
+			LinkedHashMap<String,Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
 		
-		LinkedList<Localidade> localidades = Localidade.leLocalidades("Localidades.txt");
+			LinkedList<Localidade> localidades = Localidade.leLocalidades("Localidades.txt");
 		
-		LinkedList<Palestra> palestras = Palestra.lePalestras("Palestras.txt", palestrantes, localidades);
+			LinkedList<Palestra> palestras = Palestra.lePalestras("Palestras.txt", palestrantes, localidades);
 		
-		Calendario calendario = ControleTempo.organizaPalestras(palestras, localidades);
+			Calendario calendario = ControleTempo.organizaPalestras(palestras, localidades);
 		
-		Persistencia.geraArquivoCalendario(calendario,"Calendario.txt");
+			Persistencia.geraArquivoCalendario(calendario,"Calendario.txt");
+		}
+		catch ( FileNotFoundException e ){
+			e.printStackTrace();
+		}
 	}
 }

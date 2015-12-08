@@ -76,6 +76,10 @@ public class ControleData {
         	}
         }
         
+        if ( disponibilidade.size() == 0 )
+    		throw new IllegalArgumentException();
+        
+        
         return disponibilidade;
 	}
 	

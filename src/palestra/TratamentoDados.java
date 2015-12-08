@@ -33,8 +33,14 @@ public class TratamentoDados {
 	
 	public static int duracaoMinutosPalestra(String linha) {
 		String[] horaMin = linha.replace("Duracao: ","").replace("h.","").split(":");
-		int hora = Integer.valueOf(horaMin[0].trim()) * 60;
-		int min = Integer.valueOf(horaMin[1].trim());
-		return hora + min;
+		
+		if ( horaMin.length == 2 ){
+			int hora = Integer.valueOf(horaMin[0].trim());
+			int min = Integer.valueOf(horaMin[1].trim());
+			
+			return (hora*60) + min;
+		}
+		
+		return -1;
 	}
 }

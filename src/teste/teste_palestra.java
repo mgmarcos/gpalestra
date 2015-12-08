@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 
 import palestra.Palestra;
@@ -13,7 +14,7 @@ import localidade.Localidade;
 
 public class teste_palestra {
 	@Test
-	public void carregaPalestra (){
+	public void carregaPalestra () throws FileNotFoundException{
 		// arquivo com todos os erros possíveis
 		LinkedList<Palestra> palestras;
 		LinkedHashMap<String,Palestrante> palestrantes;
