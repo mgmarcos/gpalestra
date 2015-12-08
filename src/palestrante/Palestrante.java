@@ -71,7 +71,8 @@ public class Palestrante {
 	        System.out.println(numeroPalestrantes + " palestrantes lidos com sucesso.");
 	    } 
 	    catch (FileNotFoundException e) {
-	        e.printStackTrace();
+	        System.out.println("Não foi encontrado arquivo contendo palestrantes");
+	        
 	    }catch (IllegalArgumentException e) {
 	        e.printStackTrace();
 	    }

@@ -37,6 +37,7 @@ public class ControleData {
 	 * Retorna uma lista do tipo LocalDateTime de tamanho m, sendo este o número de datas no formato correto.
 	 * @param linha
 	 * @return LinkedList<LocalTime> t
+	 * @throws IllegalArgumentException
 	 */
 	public static LinkedList<Disponibilidade> ajustaDisponibilidade(String linha) {
 		LinkedList<Disponibilidade> disponibilidade = new LinkedList<Disponibilidade>();
@@ -83,7 +84,15 @@ public class ControleData {
         return disponibilidade;
 	}
 	
-	public static boolean comparaAnoMes (Disponibilidade d1, Disponibilidade d2){
+	/**
+	 * Faz uma comparação entre dois objetos do tipo disponibilidade,
+	 * no âmbito AnoMesDia. Retorna verdadeiro se as datas forem
+	 * iguais. Exemplo: 08/12/15 e 08/12/15 => true.
+	 * @param 	d1 disponibilidade 1
+	 * @param 	d2 disponibilidade 2
+	 * @return 	verdadeiro se ambas forem iguais
+	 */
+	public static boolean comparaAnoMesDia (Disponibilidade d1, Disponibilidade d2){
 		
 		if ( d1.getAno() == d2.getAno() ){
 			
@@ -101,6 +110,11 @@ public class ControleData {
 		return false;
 	}
 	
+	/**
+	 * Converte uma string para objeto do tipo LocalTime
+	 * @param 	str Uma string no formato HH:MM
+	 * @return	LocalTime se o formato estiver correto
+	 */
 	public static LocalTime string_to_localTime(String str){
 		String[] instant;
 		
@@ -118,11 +132,17 @@ public class ControleData {
 		return LocalTime.of(houer, minute);
 	}
 	
-	public static String localdateTime_to_weekString(LocalDateTime loc){
+	public static String localDateTime_to_weekString(LocalDateTime loc){
 		return getDayFromInt(loc.getDayOfWeek().getValue()) + ", " + loc.toLocalTime().toString();
 	}
 	
-	
+	/**
+	 * Verifica se um horário no formato 24 horas está no formato:
+	 * HH[0,23]:MM[0,59]
+	 * @param houer		Hora
+	 * @param minute	Minitos
+	 * @return	verdadeiro se for válido
+	 */
 	public static boolean isValid24_time(int houer, int minute){
 		if (0 <= houer && houer <= 24)
 			if (0 <= minute && minute <= 59)
@@ -143,6 +163,11 @@ public class ControleData {
 		return (0 <= d && d <= 31); // 0 => todo mes
 	}
 	
+	/**
+	 * Retorna um inteiro [1,7] equivalendo ao dia da semana
+	 * @param 	day	String no formato: Seg || Ter || Qua ...
+	 * @return	o inteiro caso a string esteja no formato especificado. -1 caso contrário
+	 */
 	public static int getDayFromString(String day)
     {
 		if ( diasSemana.get(day) != null )
@@ -151,6 +176,11 @@ public class ControleData {
 		return -1;
     }
 	
+	/**
+	 * Retorna uma String no formato (Seg || Ter || Qua ...) a partir de um inteiro
+	 * @param 	day	Inteiro no intervalo [1,7]
+	 * @return	A string caso esteja no formato especificado. Null caso contrário
+	 */
 	public static String getDayFromInt(Integer day){
 		for ( Entry<String, Integer> entry : diasSemana.entrySet()) {
 		    String key = entry.getKey();
@@ -163,6 +193,12 @@ public class ControleData {
 		return null;
 	}
 	
+	/**
+	 * Retorna a duração em minutos entre dois objetos do tipo LocalTime
+	 * @param a	LocalTime1
+	 * @param b	LocalTime2
+	 * @return	A duração em minutos entre estes dois intervalos de tempo
+	 */
 	public static int getDurationBetween(LocalTime a, LocalTime b){
 		int minute_a, minute_b;
 		
@@ -172,11 +208,23 @@ public class ControleData {
 		return minute_a - minute_b;
 	}
 	
+	/**
+	 * Obtém o LocalTime mais perto de 23:59h
+	 * @param 	a	LocalTime1
+	 * @param 	b	LocalTime2
+	 * @return 	O maior entre eles
+	 */
 	public static LocalTime maxof_localTime(LocalTime a, LocalTime b){
 		
 		return ( getDurationBetween(a, b) > 0 ) ? a : b;
 	}
 	
+	/**
+	 * Obtém o LocalTime mais perto de 00:00h
+	 * @param 	a	LocalTime1
+	 * @param 	b	LocalTime2
+	 * @return	O menor entre eles
+	 */
 	public static LocalTime minof_localTime(LocalTime a, LocalTime b){
 		
 		return ( getDurationBetween(a, b) < 0 ) ? a : b;

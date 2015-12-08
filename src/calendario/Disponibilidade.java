@@ -57,7 +57,7 @@ public class Disponibilidade {
 		
 	}
 	
-	public String paraString(){
+	public String obterStringAnoMesDia(){
 		String		dia;
 		
 		
@@ -73,6 +73,20 @@ public class Disponibilidade {
 		
 
 		return dia + ", " + String.format("%02d/%02d/%04d", this.dia, this.mes, this.ano);
+	}
+	
+	public String obterStringDia(){
+		
+		if (this.dia == 0)
+			return "(todo mes)";
+		else
+			return ""+this.dia;
+	}
+	
+	public String obterStringHora(){
+		String hora = inicio.toString() + "-" + fim.toString();
+		
+		return hora;
 	}
 }
 

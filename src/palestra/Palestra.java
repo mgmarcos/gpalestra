@@ -71,6 +71,7 @@ public class Palestra {
 		LinkedList<Palestra> palestras = new LinkedList<Palestra>();
 		
     	scan = new Scanner(new File(arq));
+    	
     	PrintWriter log = new PrintWriter("[Log]"+arq);
     	
     	int numeroLinha = 0;

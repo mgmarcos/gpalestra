@@ -20,18 +20,18 @@ import localidade.Localidade;
  * @since	2015-09-19
  */
 public class ControleTempo {
+	
 	// altera as cores do terminal (funciona perfeitamente em unix)
 	public static final String ANSI_RED = "\u001B[31m";
 	public static final String ANSI_RESET = "\u001B[0m";
 	
 	
 	/**
-	 * <h1> Organiza Palestras </h1>
 	 * Recebe lista com localidades e palestrantes, tenta fazer o casamento dos dois de acordo com os critérios da palestra
 	 * Ex: Palestra1 precisa do Palestrante1 na Localidade1
-	 * Retorna um calendário com os eventos marcados com sucesso
-	 * @param LinkedList<Palestra>
-	 * @return Calendario
+	 * @param palestras		Lista unicamente ligada contendo palestras lidas
+	 * @param localidades	Lista unicamente ligada contendo localidades lidas
+	 * @return Calendario	Objeto calendário com os eventos marcados com sucesso
 	 */
 	public static Calendario organizaPalestras(LinkedList<Palestra> palestras, LinkedList<Localidade> localidades) {
 		Calendario calendario = new Calendario();
@@ -53,8 +53,9 @@ public class ControleTempo {
 				if(Disponibilidade.duraçãoHora(dataHoraPal).toMinutes() >= palestra.getDuracaoMinutos()) {
 					// std_war: disponibility of object:'Palestrante' can be used twice
 					// std_fix: remove disponibility object from LinkedList<LocalDateTime[]> (auto_fix) @ 2015-10-02
+					// std_war: disponibility of object:'Palestrante' is modfied
 					LocalTime[] p = dataHoraPal.getPeriodo();
-					System.out.println("Encontrado palestrante com disponibilidade no dia " + dataHoraPal.paraString() + ", " + p[0].toString() + "-" + p[1].toString());
+					System.out.println("Encontrado palestrante com disponibilidade no dia " + dataHoraPal.obterStringAnoMesDia() + ", " + p[0].toString() + "-" + p[1].toString());
 					it.remove();
 					
 					
@@ -71,7 +72,7 @@ public class ControleTempo {
 						
 						if ( !pilha_palestrante.containsKey(nome_palestrante) ){ // rodizio
 							
-							if ( ControleData.comparaAnoMes(dataHoraPal, dataHoraLoc) ){
+							if ( ControleData.comparaAnoMesDia(dataHoraPal, dataHoraLoc) ){
 								
 								if ( Disponibilidade.duraçãoHora(dataHoraLoc).toMinutes() >= palestra.getDuracaoMinutos() ){
 									evento = encaixaPalestraConformeDisponbilidade(dataHoraPal.getPeriodo(), dataHoraLoc.getPeriodo(), palestra.getDuracaoMinutos());
@@ -88,7 +89,7 @@ public class ControleTempo {
 							}
 							
 							if (!marcado)
-								System.out.println("Disponibilidade do local " + local.getEndereço() + " (" + Localidade.printDisponibilidade(dataHoraLoc) + ") não se encaixa com o dia da palestra.");
+								System.out.println("Disponibilidade do local " + local.getEndereço() + " ("+dataHoraLoc.obterStringDia()+", "+dataHoraLoc.obterStringHora()+") não se encaixa com o dia da palestra.");
 						}
 						else
 							System.out.println(nome_palestrante + " não pode dar uma palestra no local mais de uma vez (rodízio)");

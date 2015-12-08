@@ -13,7 +13,9 @@ import localidade.Localidade;
 
 public class Principal {
 	
-	static boolean logAtivado = false;
+	public static boolean logAtivado = false;
+	static boolean interativo = false;
+
 	
 	public static void main(String[] args) {
 		
@@ -21,10 +23,23 @@ public class Principal {
 			if ( a.compareTo("-l") == 0 ){
 				logAtivado = true;
 			}
+			
+			if ( a.compareTo("-i") == 0 ){
+				interativo = true;
+			}
 		}
-
+		
+		if ( interativo )
+			Interativo.iteractiveLoopStart();
+		else
+			auto_read();
+		
+	}
+	
+	
+	public static void auto_read (){
 		try{
-			LinkedHashMap<String,Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
+			LinkedHashMap<String, Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
 		
 			LinkedList<Localidade> localidades = Localidade.leLocalidades("Localidades.txt");
 		

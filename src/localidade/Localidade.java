@@ -10,9 +10,8 @@ import java.util.Scanner;
 import calendario.ControleData;
 import calendario.Disponibilidade;
 
-import java.time.LocalTime;
-
 import palestrante.Palestrante;
+import principal.Principal;
 
 
 /**
@@ -65,41 +64,12 @@ public class Localidade {
 		this.disponibilidade = disponibilidade;
 	}
 	
-
-	
-	/*
-	public Responsavel getResonsável (){
-		return responsável;
-	}
-	
-	public void setResponsável (Responsavel res){
-		this.responsável = res;
-	}
-	*/
-	
 	public LinkedHashMap<String,Palestrante> getPilha (){
 		return pilha;
 	}
 	
 	public void setPilha (LinkedHashMap<String,Palestrante> pilha){
 		this.pilha = pilha;
-	}
-	
-	
-	/**
-	 * Recebe uma das disponibilidades da localidade e retorna uma string em formato mais legível
-	 * @parm data - array de 2 elementos representando um intervalo de tempo inicio-fim
-	 * @return String - texto legível
-	 */
-	public static String printDisponibilidade (Disponibilidade data){
-		LocalTime[] p = data.getPeriodo();
-		String hora = p[0].toString() + "-" + p[1].toString();
-		
-		
-		if ( data.special_mesTodo() )
-			return "(todo mês)" + ", " + hora;
-		
-		return data.getDia() + ", " + hora;
 	}
 	
 	/**
@@ -109,21 +79,30 @@ public class Localidade {
 	 * * Confere se essas informações não possui incosistências
 	 * @param String arq : localização do arquivo
 	 * @return LinkedHashMap<String,Localidade> : lista contendo localidades lidas com sucesso
-	 * @throws FileNotFoundException 
 	 */
-	public static LinkedList<Localidade> leLocalidades(String arq) throws FileNotFoundException {
+	public static LinkedList<Localidade> leLocalidades(String arq) {
 		
 		LinkedList<Localidade> localidades = new LinkedList<Localidade>();
-		
-    	scan = new Scanner(new File(arq));
-    	PrintWriter log = new PrintWriter("[Log]"+arq);
-    	
-    	int numeroLinha = 0;
+		int numeroLinha = 0;
     	int numeroLocalidades = 0;
     	
     	Localidade novaLocalidade = null;
-
     	
+    	PrintWriter log = null;
+		
+		
+		try{
+			scan = new Scanner(new File(arq));
+			
+			if ( Principal.logAtivado )
+				log = new PrintWriter("[Log]"+arq);
+			
+		}catch (FileNotFoundException e){
+			System.out.println("Houve um erro ao acessar arquivos de localidades.");
+			return null;
+		}
+
+		
         while(scan.hasNextLine()) {
         	String linha = scan.nextLine();
         	numeroLinha++;
@@ -163,15 +142,16 @@ public class Localidade {
 	    			numeroLocalidades++;
 	    		}
 	    		
-	    		
-        	}
-        	catch ( IllegalArgumentException e ){
-        		log.println(numeroLinha + "> " + linha);
+        	} catch ( IllegalArgumentException e ){
+        		if (log != null)
+        			log.println(e.getMessage());
         	}
         }
         
         scan.close();
-        log.close();
+        
+        if (log != null)
+        	log.close();
         
         System.out.println(numeroLocalidades + " localidades lidas com sucesso.");
 		
