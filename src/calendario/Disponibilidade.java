@@ -83,8 +83,20 @@ public class Disponibilidade {
 			return ""+this.dia;
 	}
 	
+	/**
+	 * Obtém uma string no formato HH:MM-HH:MM de uma disponibilidade.
+	 * Retorna null se o início ou fim estiverem faltando.
+	 * @return String no formato especificado.
+	 */
 	public String obterStringHora(){
-		String hora = inicio.toString() + "-" + fim.toString();
+		String hora = null;
+		
+		/*
+		 * Esta checagem pode ser evitada se inicio e fim forem LocalTime da própria classe
+		 * e não uma variável de referência
+		 */
+		if (inicio != null && fim != null)
+			hora = inicio.toString() + "-" + fim.toString();
 		
 		return hora;
 	}

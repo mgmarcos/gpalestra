@@ -22,7 +22,7 @@ public class Persistencia {
 		if (itMeses.hasNext()) {
 			AnoMesCalendario anoMesCal = calendario.getMeses().get(itMeses.next());
 			String primMes = String.format("%02d",anoMesCal.getMes()) + "/" + String.format("%04d",anoMesCal.getAno());
-			String ultMes = new String();
+			String ultMes = "";
 			if(itMeses.hasNext()) {
 				while(itMeses.hasNext())
 					anoMesCal = calendario.getMeses().get(itMeses.next());

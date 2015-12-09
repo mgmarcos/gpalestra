@@ -1,8 +1,7 @@
 package teste;
 
 import org.junit.Test;
-import org.junit.Ignore;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.io.FileNotFoundException;
@@ -11,6 +10,7 @@ import java.util.LinkedHashMap;
 import palestra.Palestra;
 import palestrante.Palestrante;
 import localidade.Localidade;
+import palestra.TratamentoDados;
 
 public class teste_palestra {
 	@Test
@@ -20,10 +20,24 @@ public class teste_palestra {
 		LinkedHashMap<String,Palestrante> palestrantes;
 		LinkedList<Localidade> localidades;
 		
-		palestrantes = Palestrante.lePalestrantes("tst_palestrante.txt");
-		localidades = Localidade.leLocalidades("tst_localidades.txt");
+		palestrantes = Palestrante.lePalestrantes("/teste/00palestrante.txt");
+		localidades = Localidade.leLocalidades("/teste/00localidades.txt");
 		
 		palestras = Palestra.lePalestras("tst_palestras.txt", palestrantes, localidades);
 	}
 
+	// Caixa preta
+	@Test
+	public void teste_tratamentoDados(){
+		// Casos de testes realizados utilizando método: Classe de Equivalência
+		assertEquals(-1, TratamentoDados.duracaoMinutosPalestra("AA:00"));
+		assertEquals(-1, TratamentoDados.duracaoMinutosPalestra("-1:58"));
+		assertEquals(-1, TratamentoDados.duracaoMinutosPalestra("23:-1"));
+		assertEquals(-1, TratamentoDados.duracaoMinutosPalestra("24:00"));
+		assertEquals(-1, TratamentoDados.duracaoMinutosPalestra("23:99"));
+		
+		assertEquals(793, TratamentoDados.duracaoMinutosPalestra("13:13"));
+	}
+	
+	
 }

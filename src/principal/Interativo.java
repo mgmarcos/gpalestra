@@ -53,6 +53,10 @@ public class Interativo {
 				System.out.print("$ ");
 				line = br.readLine();
 				
+				//std_nfo:'FindBugs Fix: check if result readLine is null'
+				if (line == null)
+					break;
+				
 				ACTION feedback = cmdPhaser(line);
 				
 				switch ( feedback ){
