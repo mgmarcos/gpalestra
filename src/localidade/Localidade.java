@@ -73,7 +73,6 @@ public class Localidade {
 	}
 	
 	/**
-	 * <h2> leLocalidades <h2>
 	 * * Lê as localidades de um arquivo
 	 * * Confere se cada localidade possui todas as informações obrigatórias
 	 * * Confere se essas informações não possui incosistências

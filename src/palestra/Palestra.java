@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import palestra.TratamentoDados;
 import palestrante.Palestrante;
+import principal.Principal;
 import localidade.Localidade;
 
 public class Palestra {
@@ -67,12 +68,21 @@ public class Palestra {
 	 * @return LinkedList<Palestra> : lista contendo palestras lidas com sucesso
 	 * @throws FileNotFoundException
 	 */
-	public static LinkedList<Palestra> lePalestras (String arq, LinkedHashMap<String,Palestrante> palestrantes, LinkedList<Localidade>localidades) throws FileNotFoundException {
+	public static LinkedList<Palestra> lePalestras (String arq, LinkedHashMap<String,Palestrante> palestrantes, LinkedList<Localidade>localidades) {
 		LinkedList<Palestra> palestras = new LinkedList<Palestra>();
 		
-    	scan = new Scanner(new File(arq));
-    	
-    	PrintWriter log = new PrintWriter("[Log]"+arq);
+		PrintWriter log = null;
+
+		try{
+			scan = new Scanner(new File(arq));
+			
+			if ( Principal.logAtivado )
+				log = new PrintWriter("[Log]"+arq);
+			
+		}catch (FileNotFoundException e){
+			System.out.println("Houve um erro ao acessar arquivos de localidades.");
+			return null;
+		}
     	
     	int numeroLinha = 0;
     	int numeroPalestras = 0;
@@ -132,16 +142,20 @@ public class Palestra {
         		
         	}
         	catch ( IllegalArgumentException e ){
-        		log.println(numeroLinha + "> " + e.getMessage());
+        		if (log != null)
+        			log.println(numeroLinha + "> " + e.getMessage());
         	}
         	
         	catch ( NoSuchElementException e ){
-        		log.println("Dados do arquivo estão incompletos para palestra: " + novaPalestra.getNome());
+        		if (log != null)
+        			log.println("Dados do arquivo estão incompletos para palestra: " + novaPalestra.getNome());
         	}
         }
 
         scan.close();
-        log.close();
+        
+        if (log != null)
+        	log.close();
         
         System.out.println(numeroPalestras + " palestras lidas com sucesso.");
 		

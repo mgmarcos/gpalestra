@@ -117,14 +117,23 @@ public class ControleData {
 	 */
 	public static LocalTime string_to_localTime(String str){
 		String[] instant;
+		int houer;
+		int minute;
 		
 		instant = str.split(":");
 		
 		if (instant.length != 2)
 			return null;
 		
-		int houer = Integer.valueOf(instant[0].trim());
-		int minute = Integer.valueOf(instant[1].trim());
+		
+		try{
+			houer = Integer.valueOf(instant[0].trim());
+			minute = Integer.valueOf(instant[1].trim());
+		}
+		catch ( NumberFormatException e ){
+			return null;
+		}
+		
 		
 		if ( !isValid24_time(houer, minute) )
 			return null;

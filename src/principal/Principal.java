@@ -1,6 +1,5 @@
 package principal;
 
-import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -14,7 +13,7 @@ import localidade.Localidade;
 public class Principal {
 	
 	public static boolean logAtivado = false;
-	static boolean interativo = false;
+	static boolean interativo = true;
 
 	
 	public static void main(String[] args) {
@@ -24,8 +23,8 @@ public class Principal {
 				logAtivado = true;
 			}
 			
-			if ( a.compareTo("-i") == 0 ){
-				interativo = true;
+			if ( a.compareTo("-a") == 0 ){
+				interativo = false;
 			}
 		}
 		
@@ -38,19 +37,14 @@ public class Principal {
 	
 	
 	public static void auto_read (){
-		try{
-			LinkedHashMap<String, Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
-		
-			LinkedList<Localidade> localidades = Localidade.leLocalidades("Localidades.txt");
-		
-			LinkedList<Palestra> palestras = Palestra.lePalestras("Palestras.txt", palestrantes, localidades);
-		
-			Calendario calendario = ControleTempo.organizaPalestras(palestras, localidades);
-		
-			Persistencia.geraArquivoCalendario(calendario,"Calendario.txt");
-		}
-		catch ( FileNotFoundException e ){
-			e.printStackTrace();
-		}
+		LinkedHashMap<String, Palestrante> palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
+	
+		LinkedList<Localidade> localidades = Localidade.leLocalidades("Localidades.txt");
+	
+		LinkedList<Palestra> palestras = Palestra.lePalestras("Palestras.txt", palestrantes, localidades);
+	
+		Calendario calendario = ControleTempo.organizaPalestras(palestras, localidades);
+	
+		Persistencia.geraArquivoCalendario(calendario,"Calendario.txt");
 	}
 }

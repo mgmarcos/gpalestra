@@ -3,7 +3,6 @@ package principal;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
@@ -30,7 +29,7 @@ public class Interativo {
 	public static final String ANSI_RESET = "\u001B[0m";
 	
 	private enum gCMD {
-		leia, limpa, liste, compile, sair;
+		leia, limpe, liste, compila, ajuda, saia;
 	}
 	
 	private enum OBJ {
@@ -102,8 +101,22 @@ public class Interativo {
 					break;
 					
 					
-				case limpa:
-					cleanAll();
+				case limpe:
+					
+					if ( args.length == 1 ){
+						cleanAll();
+						break;
+					}
+					
+					o = OBJ.valueOf(args[1]);
+					
+					switch(o){
+						case evt: palestras = null; break;
+						case pal: palestrantes = null; break;
+						case loc: localidades = null; break;
+						default:
+							return ACTION.SYNTAX_ERR;
+					}
 					break;
 					
 					
@@ -123,7 +136,7 @@ public class Interativo {
 					break;
 					
 					
-				case compile:
+				case compila:
 					
 					if ( args.length != 2 )
 						return ACTION.SYNTAX_ERR;
@@ -131,8 +144,11 @@ public class Interativo {
 					doWriteCalendario(args[1]); 
 					break;
 					
+				case ajuda:
+					mostrarAjuda();
+					break;
 					
-				case sair:
+				case saia:
 					return ACTION.EXIT;
 			}
 		}
@@ -149,18 +165,12 @@ public class Interativo {
 	public static void doLoadEventos ( String arq ){
 		System.out.println("A carregar palestras do arquivo: " + arq);
 		
+		if ( palestrantes == null || localidades == null ){
+			System.out.println("Não foram carregados todos as informações necessárias para ler as palestras");
+			return;
+		}
 		
-		try{
-			if ( palestrantes == null || localidades == null ){
-				System.out.println("Não foram carregados todos as informações necessárias para ler as palestras");
-				return;
-			}
-			
-			palestras = Palestra.lePalestras(arq, palestrantes, localidades);
-		}
-		catch ( FileNotFoundException e ){
-			System.out.println("Arquivo de palestras não encontrado.");
-		}
+		palestras = Palestra.lePalestras(arq, palestrantes, localidades);
 	}
 	
 	public static void doLoadPalestrantes (String arq){
@@ -191,12 +201,20 @@ public class Interativo {
 			System.out.println("Não foi possível abrir o arquivo contendo o calendário");
 		}
 		
+		cleanAll();
+		System.out.println("Modo interativo reiniciado");
+		
 	}
 	
 	
 	
 	public static void imprimePalestras(LinkedList<Palestra> lista){
 		int i=1;
+		
+		if (lista == null){
+			System.out.println("Nenhuma palestra carregada");
+			return;
+		}
 		
 		for(Palestra pal: lista){
 			
@@ -212,6 +230,11 @@ public class Interativo {
 	public static void imprimePalestrantes(LinkedHashMap<String, Palestrante>lista){
 		int i=1;
 		
+		if (lista == null){
+			System.out.println("Nenhum palestrante carregado");
+			return;
+		}
+		
 		for(Palestrante pal: lista.values()){
 			
 			System.out.print("Palestrante " + i + ": " + pal.getNome() + "\nDisponibilidade: ");
@@ -226,6 +249,11 @@ public class Interativo {
 	
 	public static void imprimeLocalidades(LinkedList<Localidade>lista){
 		int i=1;
+		
+		if (lista == null){
+			System.out.println("Nenhuma localidade carregada");
+			return;
+		}
 		
 		for(Localidade loc : lista){
 			
@@ -252,6 +280,16 @@ public class Interativo {
 	}
 	
 	
+	
+	public static void mostrarAjuda(){
+		System.out.println(
+				  "leia  [pal,evt,loc] [localizaçãoArquivo] - lê um dos tipos de arquivo no caminho especificado"
+				+ "\nliste [pal,evt,loc] - faz uma lista dos dados lidos"
+				+ "\nlimpe - reinicia todas as estruturas lidas"
+				+ "\ncompila - cruza todas a informações e monta uma saída legível do Calendário"
+				+ "\najuda - mostra este menu de ajuda"
+				+ "\nsaia - finaliza o modo interativo do programa");
+	}
 	
 	public static void cleanAll(){
 		palestrantes = null;
