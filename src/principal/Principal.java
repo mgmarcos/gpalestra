@@ -12,8 +12,12 @@ import localidade.Localidade;
 
 public class Principal {
 	
-	public static boolean logAtivado = false;
+	private static boolean logAtivado = false;
 	static boolean interativo = true;
+	
+	public static boolean logAtivado (){
+		return logAtivado;
+	}
 
 	
 	public static void main(String[] args) {

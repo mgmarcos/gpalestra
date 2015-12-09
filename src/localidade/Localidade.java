@@ -85,7 +85,7 @@ public class Localidade {
 		int numeroLinha = 0;
     	int numeroLocalidades = 0;
     	
-    	Localidade novaLocalidade = null;
+    	Localidade novaLocalidade = new Localidade();
     	
     	PrintWriter log = null;
 		
@@ -93,7 +93,7 @@ public class Localidade {
 		try{
 			scan = new Scanner(new File(arq));
 			
-			if ( Principal.logAtivado )
+			if ( Principal.logAtivado() )
 				log = new PrintWriter("[Log]"+arq);
 			
 		}catch (FileNotFoundException e){
@@ -111,8 +111,6 @@ public class Localidade {
 	
 	        		// Leia informação básica e crie nova localidade
 	        		linha = TratamentoDados.ajustaNome(linha);
-	        		
-	        		novaLocalidade = new Localidade();
 	        		
 	        		novaLocalidade.setNome(linha);
 	        	}
@@ -134,10 +132,10 @@ public class Localidade {
 	    			throw new IllegalArgumentException(numeroLinha + "> " + linha);
 	        	
 				// Se possui localidade com todos os dados corretos
-	    		if ( (novaLocalidade != null) && novaLocalidade.possui_informações() ){
+	    		if ( novaLocalidade.possui_informações() ){
 	    			
 	    			localidades.add(novaLocalidade);
-	    			novaLocalidade = null;
+	    			novaLocalidade = new Localidade();
 	    			numeroLocalidades++;
 	    		}
 	    		

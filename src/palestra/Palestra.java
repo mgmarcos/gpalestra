@@ -76,7 +76,7 @@ public class Palestra {
 		try{
 			scan = new Scanner(new File(arq));
 			
-			if ( Principal.logAtivado )
+			if ( Principal.logAtivado() )
 				log = new PrintWriter("[Log]"+arq);
 			
 		}catch (FileNotFoundException e){
