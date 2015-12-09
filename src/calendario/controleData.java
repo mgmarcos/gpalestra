@@ -153,7 +153,7 @@ public class ControleData {
 	 * @return	verdadeiro se for válido
 	 */
 	public static boolean isValid24_time(int houer, int minute){
-		if (0 <= houer && houer <= 23)
+		if (0 <= houer && houer <= 24)
 			if (0 <= minute && minute <= 59)
 				return true;
 	

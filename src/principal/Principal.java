@@ -18,10 +18,6 @@ public class Principal {
 	public static boolean logAtivado (){
 		return logAtivado;
 	}
-	
-	public static void setLogAtivado (boolean b){
-		logAtivado = b;
-	}
 
 	
 	public static void main(String[] args) {
