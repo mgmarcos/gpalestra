@@ -3,13 +3,6 @@ package teste;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import java.util.LinkedList;
-import java.io.FileNotFoundException;
-import java.util.LinkedHashMap;
-
-import palestra.Palestra;
-import palestrante.Palestrante;
-import localidade.Localidade;
 import palestra.TratamentoDados;
 
 public class teste_palestra {

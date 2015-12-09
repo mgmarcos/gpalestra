@@ -180,13 +180,13 @@ public class Interativo {
 	public static void doLoadPalestrantes (String arq){
 		System.out.println("A carregar palestrantes do arquivo: " + arq);
 
-		palestrantes = Palestrante.lePalestrantes("Palestrantes.txt");
+		palestrantes = Palestrante.lePalestrantes(arq);
 	}
 	
 	public static void doLoadLocalidades (String arq){
 		System.out.println("A carregar localidades do arquivo: " + arq);
 		
-		localidades = Localidade.leLocalidades("Localidades.txt");
+		localidades = Localidade.leLocalidades(arq);
 	}
 	
 	public static void doWriteCalendario (String arq){
@@ -223,7 +223,7 @@ public class Interativo {
 		for(Palestra pal: lista){
 			
 			System.out.println(	"Palestra " + i + ": " + pal.getNome() + "\nTema: " + pal.getTema() + 
-								"\nLocal: " + pal.getLocal() + "\nPalestrante: " + pal.getPalestrante() +
+								"\nLocal: " + pal.getLocal().getNome() + "\nPalestrante: " + pal.getPalestrante().getNome() +
 								"\nDuração: " + pal.getDuracaoMinutos());
 			
 			i++;

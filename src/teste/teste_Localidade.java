@@ -9,7 +9,7 @@ import principal.Principal;
 
 public class teste_Localidade {
 	@Test
-	public static void tst_leLocalidades (){
+	public void tst_leLocalidades (){
 		String 	dir, arq;
 		int		i, num_arq;
 		int[]	esperado = { 0, 0, 0, 0, 1, 0 }; // qtd. de Localidades lidas

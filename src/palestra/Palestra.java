@@ -101,7 +101,6 @@ public class Palestra {
         			novaPalestra = new Palestra();
         			novaPalestra.setNome(linha);
         			
-        			
         			linha = scan.nextLine(); numeroLinha++;
         			if ( linha.startsWith("Palestrante: ") ){
         				novaPalestra.setPalestrante(TratamentoDados.palestrantePalestra(linha, palestrantes));
@@ -109,11 +108,9 @@ public class Palestra {
         				if( novaPalestra.getPalestrante() == null )
         					throw new IllegalArgumentException("Palestrante não identificado");
         				
-        				
         				linha = scan.nextLine(); numeroLinha++;
         				if ( linha.startsWith("Tema: ") ){
         					novaPalestra.setTema(TratamentoDados.temaPalestra(linha));
-        					
         					
         					linha = scan.nextLine(); numeroLinha++;
         					if ( linha.startsWith("Local: ") ){
