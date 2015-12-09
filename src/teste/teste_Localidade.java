@@ -1,47 +1,31 @@
 package teste;
 
-import java.util.LinkedList;
-import java.io.FileNotFoundException;
-
 import org.junit.Test;
-import org.junit.Ignore;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import localidade.Localidade;
-import principal.Interativo;
+import principal.Principal;
 
 
 public class teste_Localidade {
 	@Test
-	public void carregaLocalidade() throws FileNotFoundException{
-		String arq;
-		LinkedList<Localidade> localidades;
+	public static void tst_leLocalidades (){
+		String 	dir, arq;
+		int		i, num_arq;
+		int[]	esperado = { 0, 0, 0, 0, 1, 0 }; // qtd. de Localidades lidas
 		
-		arq = "tst_localidade.txt";
+		dir = "/teste/";
+		arq = "Localidades.txt";
 		
-		localidades = Localidade.leLocalidades(arq);
+		// o primeiro é especial
+		Principal.setLogAtivado(true);
+		assertEquals ( 0, Localidade.leLocalidades(dir+"01"+arq).size() );
+		Principal.setLogAtivado(false);
 		
-		Interativo.imprimeLocalidades(localidades);
 		
-		System.out.println("Num: "+ localidades.size());
-		
-		assertEquals ( 2, localidades.size() );
-		
-	}
-	
-	@Ignore
-	public static void imprimeNumero(int[] num){
-		int i, len;
-		
-		len = num.length;
-		
-		if (len != 10 && len != 11)
-			return;
-		
-		System.out.print("(" + num[0] + num[1] + ") ");
-		
-		for(i=2; i<len; i++){
-			System.out.print(num[i]);
+		num_arq = 6;
+		for(i=2; i<=num_arq; i++){
+			assertEquals (esperado[i], Localidade.leLocalidades(dir+"0"+i+"Localidades.txt").size() );
 		}
 	}
 }

@@ -13,6 +13,7 @@ import localidade.Localidade;
 import palestra.TratamentoDados;
 
 public class teste_palestra {
+	/*
 	@Test
 	public void carregaPalestra () throws FileNotFoundException{
 		// arquivo com todos os erros possíveis
@@ -24,7 +25,7 @@ public class teste_palestra {
 		localidades = Localidade.leLocalidades("/teste/00localidades.txt");
 		
 		palestras = Palestra.lePalestras("tst_palestras.txt", palestrantes, localidades);
-	}
+	}*/
 
 	// Caixa preta
 	@Test
