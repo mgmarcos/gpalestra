@@ -48,9 +48,9 @@ public class ControleData {
         	String[] camposDisp = d.split(",");
         	
         	String[] data = camposDisp[1].split("/");
-        	int dia = Integer.valueOf(data[0].trim());
-        	int mes = Integer.valueOf(data[1].trim());
-        	int ano = Integer.valueOf(data[2].trim());
+        	int dia = Integer.parseInt(data[0].trim());
+        	int mes = Integer.parseInt(data[1].trim());
+        	int ano = Integer.parseInt(data[2].trim());
         	
         	if ( ControleData.isValidDay(dia) && ControleData.isValidMonth(mes) && ControleData.isValidYear(ano) ){
         		
@@ -127,8 +127,8 @@ public class ControleData {
 		
 		
 		try{
-			houer = Integer.valueOf(instant[0].trim());
-			minute = Integer.valueOf(instant[1].trim());
+			houer = Integer.parseInt(instant[0].trim());
+			minute = Integer.parseInt(instant[1].trim());
 		}
 		catch ( NumberFormatException e ){
 			return null;
