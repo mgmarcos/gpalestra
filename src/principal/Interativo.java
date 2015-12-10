@@ -40,6 +40,9 @@ public class Interativo {
 		EXIT, CONTINUE, SYNTAX_ERR;
 	}
 	
+	/**
+	 * Loop principal para processar do interativo
+	 */
 	public static void iteractiveLoopStart (){
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String line;
@@ -77,6 +80,12 @@ public class Interativo {
 		}
 	}
 	
+	
+	/**
+	 * Função que analisa especificamente o comando
+	 * @param line o comando a ser analisado
+	 * @return uma ação a ser tomada pelo loop principal
+	 */
 	public static ACTION cmdPhaser(String line){
 		String[] args = line.split(" ");
 		
@@ -165,7 +174,10 @@ public class Interativo {
 	}
 	
 	
-	
+	/**
+	 * Carrega as Palestras
+	 * @param arq Arquivo especificado pelo usuário
+	 */
 	public static void doLoadEventos ( String arq ){
 		System.out.println("A carregar palestras do arquivo: " + arq);
 		
@@ -177,18 +189,30 @@ public class Interativo {
 		palestras = Palestra.lePalestras(arq, palestrantes, localidades);
 	}
 	
+	/**
+	 * Carrega os Palestrantes
+	 * @param arq Arquivo especificado pelo usuário
+	 */
 	public static void doLoadPalestrantes (String arq){
 		System.out.println("A carregar palestrantes do arquivo: " + arq);
 
 		palestrantes = Palestrante.lePalestrantes(arq);
 	}
 	
+	/**
+	 * Carrega as Localidades
+	 * @param arq Arquivo especificado pelo usuário
+	 */
 	public static void doLoadLocalidades (String arq){
 		System.out.println("A carregar localidades do arquivo: " + arq);
 		
 		localidades = Localidade.leLocalidades(arq);
 	}
 	
+	/**
+	 * Escreve o calendário
+	 * @param arq Arquivo especificado pelo usuário
+	 */
 	public static void doWriteCalendario (String arq){
 		System.out.println("Cruzando informações para calendário..." );
 		

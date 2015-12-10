@@ -94,7 +94,7 @@ public class Localidade {
 			scan = new Scanner(new File(arq));
 			
 			if ( Principal.logAtivado() )
-				log = new PrintWriter("[Log]"+arq);
+				log = new PrintWriter(arq+"log");
 			
 		}catch (FileNotFoundException e){
 			System.out.println("Houve um erro ao acessar arquivos de localidades.");
