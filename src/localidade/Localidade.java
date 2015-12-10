@@ -98,7 +98,7 @@ public class Localidade {
 			
 		}catch (FileNotFoundException e){
 			System.out.println("Houve um erro ao acessar arquivos de localidades.");
-			return null;
+			return localidades;
 		}
 
 		
